@@ -13,7 +13,7 @@ WHERE district LIKE 'K%a'
   AND district NOT LIKE '% %';
 ```
 
-\![Задание 1](hw2_task1.png)
+![Задание 1](hw2_task1.png)
 
 ## Задание 2
 
@@ -26,7 +26,7 @@ WHERE payment_date BETWEEN '2005-06-15 00:00:00' AND '2005-06-18 23:59:59'
   AND amount > 10.00;
 ```
 
-\![Задание 2](hw2_task2.png)
+![Задание 2](hw2_task2.png)
 
 ## Задание 3
 
@@ -39,7 +39,7 @@ ORDER BY rental_date DESC
 LIMIT 5;
 ```
 
-\![Задание 3](hw2_task3.png)
+![Задание 3](hw2_task3.png)
 
 ## Задание 4
 
@@ -54,4 +54,4 @@ WHERE active = 1
   AND LOWER(first_name) IN ('kelly', 'willie');
 ```
 
-\![Задание 4](hw2_task4.png)
+![Задание 4](hw2_task4.png)
