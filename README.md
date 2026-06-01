@@ -1,4 +1,4 @@
-# Домашнее задание к занятию «Работа с данными (DDL/DML)» (часть 2)
+# Домашнее задание к занятию «SQL. Часть 1»
 
 **Студент:** Лукин Станислав
 
@@ -13,8 +13,6 @@ WHERE district LIKE 'K%a'
   AND district NOT LIKE '% %';
 ```
 
-**Результат:**
-
 \![Задание 1](hw2_task1.png)
 
 ## Задание 2
@@ -28,8 +26,6 @@ WHERE payment_date BETWEEN '2005-06-15 00:00:00' AND '2005-06-18 23:59:59'
   AND amount > 10.00;
 ```
 
-**Результат:**
-
 \![Задание 2](hw2_task2.png)
 
 ## Задание 3
@@ -42,8 +38,6 @@ FROM rental
 ORDER BY rental_date DESC
 LIMIT 5;
 ```
-
-**Результат:**
 
 \![Задание 3](hw2_task3.png)
 
@@ -59,7 +53,5 @@ FROM customer
 WHERE active = 1
   AND LOWER(first_name) IN ('kelly', 'willie');
 ```
-
-**Результат:**
 
 \![Задание 4](hw2_task4.png)
