@@ -1,125 +1,65 @@
-# Домашнее задание к занятию «Работа с данными (DDL/DML)»
+# Домашнее задание к занятию «Работа с данными (DDL/DML)» (часть 2)
 
 **Студент:** Лукин Станислав
 
 ## Задание 1
 
-### 1.2 Создание учётной записи sys_temp
+Получить уникальные названия районов из таблицы address, которые начинаются на "K", заканчиваются на "a" и не содержат пробелов.
 
 ```sql
-CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'stas';
+SELECT DISTINCT district
+FROM address
+WHERE district LIKE 'K%a'
+  AND district NOT LIKE '% %';
 ```
 
-### 1.3 Список пользователей
+**Результат:**
 
-```sql
-SELECT User, Host FROM mysql.user;
-```
-
-\![Список пользователей](01_list_users.png)
-
-### 1.4 Права до выдачи
-
-```sql
-SHOW GRANTS FOR 'sys_temp'@'localhost';
-```
-
-\![Права до выдачи](02_show_grants_before.png)
-
-### 1.5 Выдача всех прав
-
-```sql
-GRANT ALL PRIVILEGES ON *.* TO 'sys_temp'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-```
-
-\![Выдача всех прав](03_grant_all.png)
-
-### 1.6 Права после выдачи
-
-```sql
-SHOW GRANTS FOR 'sys_temp'@'localhost';
-```
-
-\![Права после выдачи](04_show_grants_after.png)
-
-### 1.7 Подключение от sys_temp
-
-```bash
-mysql -u sys_temp -p
-```
-
-\![Подключение от sys_temp](05_connect_as_sys_temp.png)
-
-### 1.8 Восстановление дампа Sakila
-
-```bash
-wget https://downloads.mysql.com/docs/sakila-db.zip
-unzip sakila-db.zip
-sudo mysql -u root < sakila-db/sakila-schema.sql
-sudo mysql -u root < sakila-db/sakila-data.sql
-```
-
-```sql
-USE sakila;
-SHOW TABLES;
-```
-
-\![Таблицы Sakila](06_sakila_tables.png)
-
-### 1.9 ER-диаграмма Sakila
-
-\![ER-диаграмма](07_er_diagram.png)
+\![Задание 1](hw2_task1.png)
 
 ## Задание 2
 
-Таблица первичных ключей базы `sakila`:
-
-| Название таблицы | Название первичного ключа |
-|------------------|---------------------------|
-| actor            | actor_id                  |
-| address          | address_id                |
-| category         | category_id               |
-| city             | city_id                   |
-| country          | country_id                |
-| customer         | customer_id               |
-| film             | film_id                   |
-| film_actor       | actor_id, film_id         |
-| film_category    | film_id, category_id      |
-| film_text        | film_id                   |
-| inventory        | inventory_id              |
-| language         | language_id               |
-| payment          | payment_id                |
-| rental           | rental_id                 |
-| staff            | staff_id                  |
-| store            | store_id                  |
-
-## Все использованные SQL-запросы
+Получить платежи за период с 15 по 18 июня 2005 года включительно, стоимостью более 10.00.
 
 ```sql
--- 1. Создание пользователя
-CREATE USER 'sys_temp'@'localhost' IDENTIFIED BY 'stas';
-
--- 2. Просмотр пользователей
-SELECT User, Host FROM mysql.user;
-
--- 3. Просмотр прав до выдачи
-SHOW GRANTS FOR 'sys_temp'@'localhost';
-
--- 4. Выдача всех прав
-GRANT ALL PRIVILEGES ON *.* TO 'sys_temp'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
--- 5. Просмотр прав после выдачи
-SHOW GRANTS FOR 'sys_temp'@'localhost';
-
--- 6. Список таблиц Sakila
-USE sakila;
-SHOW TABLES;
-
--- 7. Получение первичных ключей
-SELECT TABLE_NAME, COLUMN_NAME
-FROM information_schema.KEY_COLUMN_USAGE
-WHERE CONSTRAINT_NAME = 'PRIMARY' AND TABLE_SCHEMA = 'sakila'
-ORDER BY TABLE_NAME;
+SELECT *
+FROM payment
+WHERE payment_date BETWEEN '2005-06-15 00:00:00' AND '2005-06-18 23:59:59'
+  AND amount > 10.00;
 ```
+
+**Результат:**
+
+\![Задание 2](hw2_task2.png)
+
+## Задание 3
+
+Последние пять аренд фильмов.
+
+```sql
+SELECT *
+FROM rental
+ORDER BY rental_date DESC
+LIMIT 5;
+```
+
+**Результат:**
+
+\![Задание 3](hw2_task3.png)
+
+## Задание 4
+
+Активные покупатели с именами Kelly или Willie, с преобразованием регистра и заменой 'll' на 'pp'.
+
+```sql
+SELECT 
+    REPLACE(LOWER(first_name), 'll', 'pp') AS modified_first_name,
+    LOWER(last_name) AS modified_last_name
+FROM customer
+WHERE active = 1
+  AND LOWER(first_name) IN ('kelly', 'willie');
+```
+
+**Результат:**
+
+\![Задание 4](hw2_task4.png)
